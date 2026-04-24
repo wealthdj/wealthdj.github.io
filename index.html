@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#070410" />
 <title>WealthDJ — Afrogospel Selector · Tech + Art · DJ Wealth</title>
-<meta name="description" content="DJ Wealth — Afrogospel selector from Ilorin, Nigeria. 25+ mixtapes, 435K streams on Audiomack. Collaborations with Frank Edwards, Mercy Chinwo, Tim Godfrey, Dunsin Oyekan, Tope Alabi, Sinach, Mike Abdul, Ada Ehi, Lecrae, Moses Bliss & more." />
+<meta name="description" content="DJ Wealth — Afrogospel selector based in the US, available worldwide. 25+ mixtapes, 435K streams on Audiomack. Collaborations with Frank Edwards, Mercy Chinwo, Tim Godfrey, Dunsin Oyekan, Tope Alabi, Sinach, Mike Abdul, Ada Ehi, Lecrae, Moses Bliss & more." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -398,41 +398,315 @@
   section { padding: 100px 32px; position: relative; z-index: 2; }
   @media (max-width: 700px) { section { padding: 70px 18px; } }
 
+  /* LOGO MARK (brand) */
+  .logo-mark {
+    width: 30px; height: 30px;
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) invert(1);
+    flex-shrink: 0;
+    transition: filter .4s ease;
+  }
+  .nav-mark:hover .logo-mark { filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%); }
+
+  .enter-logo {
+    width: clamp(96px, 16vw, 140px);
+    height: clamp(96px, 16vw, 140px);
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%);
+    animation: enterFade 1.2s .1s both;
+    opacity: .95;
+  }
+
   /* ABOUT */
   .about { background: var(--ink); }
   .about-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: center; }
 
   .portrait {
-    position: relative; aspect-ratio: 3/4;
+    position: relative; aspect-ratio: 4/5;
     border-radius: 4px; overflow: hidden; background: var(--midnight);
     box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(242,228,201,.08);
+    transition: transform .8s cubic-bezier(.2,.8,.2,1), box-shadow .8s;
   }
-  .stained-glass {
+  .portrait:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 50px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(245,185,66,.5);
+  }
+
+  .portrait-img {
+    position: absolute; inset: 0;
+    background-image: url('djwealth-portrait.jpg');
+    background-size: cover; background-position: center top;
+    filter: grayscale(1) contrast(1.1) brightness(.95);
+    transition: filter 1s cubic-bezier(.2,.8,.2,1), transform 1.2s cubic-bezier(.2,.8,.2,1);
+    transform: scale(1.02);
+  }
+  .portrait:hover .portrait-img {
+    filter: grayscale(0) contrast(1.05) brightness(1) sepia(.15) hue-rotate(-10deg) saturate(1.3);
+    transform: scale(1);
+  }
+  .portrait-tint {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at 30% 20%, rgba(230,57,70,.5), transparent 50%),
-      radial-gradient(ellipse at 75% 30%, rgba(245,185,66,.45), transparent 45%),
-      radial-gradient(ellipse at 30% 80%, rgba(124,58,237,.55), transparent 55%),
-      radial-gradient(ellipse at 70% 85%, rgba(16,185,129,.35), transparent 50%),
-      linear-gradient(180deg, rgba(14,7,32,.3), rgba(14,7,32,.7));
+      radial-gradient(ellipse at 30% 20%, rgba(230,57,70,.18), transparent 55%),
+      radial-gradient(ellipse at 75% 80%, rgba(245,185,66,.2), transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.1), transparent 60%),
+      linear-gradient(180deg, transparent 40%, rgba(7,4,16,.55) 100%);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    opacity: .9;
+    transition: opacity .8s;
   }
-  .stained-panels { position: absolute; inset: 0; display: grid; grid-template: repeat(6,1fr)/repeat(4,1fr); gap: 3px; mix-blend-mode: overlay; opacity: .6; }
-  .stained-panels div { background: rgba(242,228,201,.04); border: 1px solid rgba(242,228,201,.08); }
-  .portrait-silhouette {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 70%; height: 75%;
-    background: radial-gradient(ellipse at top, var(--ink) 40%, transparent 70%);
-    border-radius: 50% 50% 0 0 / 40% 40% 0 0; opacity: .75;
+  .portrait:hover .portrait-tint { opacity: .55; }
+  .portrait-scan {
+    position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(180deg, transparent 0 3px, rgba(242,228,201,.025) 3px 4px);
+    mix-blend-mode: overlay;
+  }
+  .portrait-badge {
+    position: absolute; top: 16px; left: 16px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    background: rgba(7,4,16,.82); backdrop-filter: blur(10px);
+    border: 1px solid rgba(245,185,66,.3);
+    border-radius: 999px;
+    font-family: var(--ff-mono); font-size: 9.5px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--amber);
+  }
+  .portrait-badge .lb-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+    animation: livePulse 2s ease-out infinite;
   }
   .portrait-cap {
     position: absolute; bottom: 16px; left: 16px; right: 16px;
-    padding: 12px 14px; background: rgba(7,4,16,.78); backdrop-filter: blur(8px);
-    border: 1px solid rgba(242,228,201,.1);
+    padding: 12px 14px; background: rgba(7,4,16,.82); backdrop-filter: blur(10px);
+    border: 1px solid rgba(242,228,201,.12);
     font-family: var(--ff-mono); font-size: 9.5px; letter-spacing: .24em;
     text-transform: uppercase; color: var(--bone-dim);
     display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
   .portrait-cap strong { color: var(--amber); font-weight: 500; letter-spacing: .1em; }
+  .portrait-cap-logo {
+    width: 24px; height: 24px;
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%);
+    flex-shrink: 0;
+  }
+
+  /* MARK SECTION */
+  .mark-section {
+    position: relative; z-index: 2;
+    padding: 110px 32px;
+    background: var(--ink);
+    border-top: 1px solid rgba(242,228,201,.06);
+    border-bottom: 1px solid rgba(242,228,201,.06);
+    overflow: hidden;
+    text-align: center;
+  }
+  .mark-section::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(245,185,66,.08), transparent 50%);
+    pointer-events: none;
+  }
+  .mark-wrap { max-width: 1100px; margin: 0 auto; position: relative; }
+  .mark-tag {
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: .32em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 30px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .mark-tag::before, .mark-tag::after { content: ""; width: 30px; height: 1px; background: var(--amber); }
+
+  .mark-image {
+    width: clamp(180px, 30vw, 260px);
+    height: clamp(180px, 30vw, 260px);
+    margin: 0 auto 36px;
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) invert(1);
+    opacity: .94;
+    transition: all .8s cubic-bezier(.2,.8,.2,1);
+    animation: markFloat 7s ease-in-out infinite;
+  }
+  .mark-section:hover .mark-image {
+    filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%);
+    transform: scale(1.05);
+  }
+  @keyframes markFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  .mark-words {
+    font-family: var(--ff-display);
+    font-size: clamp(1.8rem, 4.5vw, 3.6rem);
+    line-height: 1.05; letter-spacing: -.03em;
+    max-width: 22ch; margin: 0 auto;
+  }
+  .mark-words em { font-family: var(--ff-italic); font-style: italic; font-weight: 500; color: var(--amber); letter-spacing: 0; }
+
+  .mark-sub {
+    margin-top: 26px;
+    font-family: var(--ff-italic); font-style: italic;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    color: var(--bone-dim); max-width: 50ch;
+    margin-left: auto; margin-right: auto; line-height: 1.55;
+  }
+  .mark-attrs {
+    margin-top: 36px;
+    display: inline-flex; gap: clamp(14px, 2.5vw, 30px);
+    padding: 14px 24px; border: 1px solid rgba(242,228,201,.12); border-radius: 999px;
+    font-family: var(--ff-mono); font-size: 9.5px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--bone-dim);
+    flex-wrap: wrap; justify-content: center;
+  }
+  .mark-attrs span strong { color: var(--amber); font-weight: 500; letter-spacing: .1em; }
+
+  /* FOOTER logo version */
+  .footer-logo {
+    width: 44px; height: 44px; display: inline-block;
+    vertical-align: middle; margin-right: 14px;
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%);
+  }
+
+  /* CINEMA CUT — full-bleed dramatic portrait moment */
+  .cinema-cut {
+    position: relative; z-index: 2;
+    min-height: 75vh;
+    padding: 0;
+    background: var(--ink);
+    overflow: hidden;
+    display: flex; align-items: stretch;
+  }
+  .cc-image {
+    position: absolute; inset: 0;
+    background-image: url('djwealth-portrait.jpg');
+    background-size: cover;
+    background-position: 55% center;
+    filter: grayscale(1) contrast(1.15) brightness(.85);
+    transform: scale(1.04);
+    transition: transform 10s ease-out;
+  }
+  .cinema-cut.in .cc-image { transform: scale(1); }
+  .cc-tint {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(7,4,16,.95) 0%, rgba(7,4,16,.65) 35%, rgba(7,4,16,.15) 60%, rgba(7,4,16,.4) 100%),
+      radial-gradient(ellipse at 20% 20%, rgba(230,57,70,.2), transparent 60%),
+      radial-gradient(ellipse at 85% 85%, rgba(245,185,66,.18), transparent 55%);
+    mix-blend-mode: normal;
+  }
+  .cc-scan {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(180deg, transparent 0 3px, rgba(242,228,201,.025) 3px 4px);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+  .cc-frame {
+    position: absolute; inset: 18px;
+    border: 1px solid rgba(245,185,66,.22);
+    pointer-events: none;
+  }
+  .cc-frame::before, .cc-frame::after,
+  .cc-frame .c-tl, .cc-frame .c-tr, .cc-frame .c-bl, .cc-frame .c-br {
+    content: ""; position: absolute; width: 18px; height: 18px;
+    border: 2px solid var(--amber);
+  }
+  .cc-frame .c-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+  .cc-frame .c-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+  .cc-frame .c-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+  .cc-frame .c-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+  .cc-inner {
+    position: relative; z-index: 3;
+    padding: clamp(50px, 7vw, 100px) clamp(32px, 5vw, 80px);
+    max-width: 780px;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 24px;
+  }
+  .cc-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--ff-mono); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--amber); padding-bottom: 20px; border-bottom: 1px solid rgba(245,185,66,.25); gap: 20px; flex-wrap: wrap; }
+  .cc-top .cc-rec { display: inline-flex; align-items: center; gap: 8px; color: var(--ruby); }
+  .cc-top .cc-rec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ruby); animation: livePulse 1.8s ease-out infinite; }
+
+  .cc-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem, 7vw, 6.5rem);
+    line-height: .88; letter-spacing: -.05em;
+    color: var(--bone);
+  }
+  .cc-title em { font-family: var(--ff-italic); font-style: italic; font-weight: 500; color: var(--amber); letter-spacing: 0; }
+  .cc-sub {
+    font-family: var(--ff-italic); font-style: italic; font-weight: 500;
+    font-size: clamp(1.15rem, 2vw, 1.7rem); line-height: 1.35;
+    color: var(--bone-dim); max-width: 30ch;
+  }
+  .cc-sub strong { color: var(--amber); font-weight: 600; }
+  .cc-credits {
+    margin-top: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: .24em;
+    text-transform: uppercase; color: var(--bone-dim);
+  }
+  .cc-credits-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .cc-credits-row strong { color: var(--amber); font-weight: 500; letter-spacing: .1em; min-width: 68px; display: inline-block; }
+
+  .cc-logo-corner {
+    position: absolute; bottom: 32px; right: 32px;
+    width: 72px; height: 72px;
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%);
+    opacity: .85;
+    z-index: 3;
+  }
+
+  @media (max-width: 700px) {
+    .cinema-cut { min-height: 85vh; }
+    .cc-image { background-position: 60% center; }
+    .cc-tint { background:
+      linear-gradient(180deg, rgba(7,4,16,.5) 0%, rgba(7,4,16,.3) 40%, rgba(7,4,16,.9) 100%),
+      radial-gradient(ellipse at 20% 20%, rgba(230,57,70,.25), transparent 60%),
+      radial-gradient(ellipse at 85% 85%, rgba(245,185,66,.2), transparent 55%);
+    }
+    .cc-inner { max-width: 100%; justify-content: flex-end; padding-bottom: 80px; }
+    .cc-logo-corner { width: 56px; height: 56px; top: 24px; right: 24px; bottom: auto; }
+    .cc-frame { inset: 12px; }
+  }
+
+  /* TESTIMONY portrait backdrop */
+  .testimony-bg {
+    position: absolute; inset: 0;
+    background-image: url('djwealth-portrait.jpg');
+    background-size: cover;
+    background-position: 55% 25%;
+    filter: grayscale(1) contrast(1.2) brightness(.6) blur(1px);
+    opacity: .28;
+    z-index: 0;
+    mix-blend-mode: luminosity;
+  }
+  .testimony-bg-veil {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(7,4,16,.7) 70%),
+      linear-gradient(180deg, rgba(7,4,16,.8) 0%, rgba(26,15,46,.5) 50%, rgba(7,4,16,.9) 100%);
+  }
+  .testimony .testimony-inner { z-index: 2; }
+
+  /* TAPE logo watermark */
+  .tape-cover-logo {
+    position: absolute; top: 12px; right: 12px;
+    width: 34px; height: 34px;
+    background-image: url('djwealth-logo.png');
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    filter: brightness(0) invert(1);
+    opacity: .35; z-index: 2;
+    mix-blend-mode: overlay;
+    transition: opacity .4s, filter .4s;
+  }
+  .tape:hover .tape-cover-logo {
+    opacity: .85;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(42%) saturate(1109%) hue-rotate(355deg) brightness(102%) contrast(96%);
+  }
 
   .about h2 {
     font-family: var(--ff-display); font-size: clamp(1.9rem, 4.5vw, 4.2rem);
@@ -1177,6 +1451,7 @@
 <!-- ENTER OVERLAY -->
 <div class="enter-overlay" id="enterOverlay">
   <div class="enter-inner">
+    <div class="enter-logo"></div>
     <div class="enter-mark">WEALTH<em>DJ</em></div>
 
     <div class="enter-vinyl-wrap">
@@ -1219,7 +1494,7 @@
 
     <div class="enter-meta">
       <span>Afrogospel · Tech + Art</span>
-      <span>Ilorin · Lagos · Worldwide</span>
+      <span>Based in the US · Worldwide</span>
       <span>Est. MMXIV</span>
     </div>
   </div>
@@ -1230,7 +1505,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#top" class="nav-mark" data-cursor-hover>WEALTH<em>DJ</em></a>
+  <a href="#top" class="nav-mark" data-cursor-hover><span class="logo-mark"></span>WEALTH<em>DJ</em></a>
   <div class="nav-links">
     <a href="#about" data-cursor-hover>About</a>
     <a href="#spinning" data-cursor-hover>Now Spinning</a>
@@ -1254,13 +1529,13 @@
   <a href="#journey" data-cursor-hover>Journey</a>
   <a href="#booking" data-cursor-hover>Book</a>
   <div class="mm-divider"></div>
-  <div class="mm-sub">Ilorin · Lagos · Worldwide</div>
+  <div class="mm-sub">Based in the US · Available Worldwide</div>
 </div>
 
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-meta">
-    <span>Ilorin ◦ Lagos ◦ Worldwide</span>
+    <span>Based in the US ◦ Touring Worldwide</span>
     <span class="m-center"><span class="bpm"><span class="bpm-dot"></span><span class="bpm-num">128</span>&nbsp;BPM</span></span>
     <span>Side A · 33⅓ · Loop N°014</span>
   </div>
@@ -1352,26 +1627,23 @@
 <section class="about" id="about">
   <div class="about-grid">
     <div class="portrait reveal">
-      <div class="stained-glass"></div>
-      <div class="stained-panels">
-        <div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
-      </div>
-      <div class="portrait-silhouette"></div>
+      <div class="portrait-img"></div>
+      <div class="portrait-tint"></div>
+      <div class="portrait-scan"></div>
+      <div class="portrait-badge"><span class="lb-dot"></span>Est. 2014</div>
       <div class="portrait-cap">
-        <span>N°001 · <strong>DJ Wealth</strong></span>
-        <span>Ilorin · NG</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="portrait-cap-logo"></div>
+          <span>N°001 · <strong>DJ Wealth</strong></span>
+        </div>
+        <span>US · Worldwide</span>
       </div>
     </div>
 
     <div class="reveal">
       <div class="section-label">The Selector</div>
       <h2>This is <em>DJ Wealth</em>. A decade-plus of praise on the low-end, <em>glory</em> on the top-line.</h2>
-      <p>WealthDJ is the ongoing sonic journal of <strong>DJ Wealth</strong> — an Afrogospel selector based between <strong>Ilorin</strong> and <strong>Lagos</strong>, Nigeria, releasing mixtapes under the banner of <strong>HoWz Studios</strong>. Since cutting his first <em>#Superstars Vol 1</em> in February 2014, he's turned the DJ booth into a pulpit that moves: choir vocals riding amapiano basslines, Sunday anthems stitched to afrobeats pockets, quiet-storm prayers between the drops.</p>
+      <p>WealthDJ is the ongoing sonic journal of <strong>DJ Wealth</strong> — an Afrogospel selector with roots in <strong>Ilorin, Nigeria</strong> and now based in <strong>the United States</strong>, releasing mixtapes under the banner of <strong>HoWz Studios</strong>. Since cutting his first <em>#Superstars Vol 1</em> in February 2014, he's turned the DJ booth into a pulpit that moves: choir vocals riding amapiano basslines, Sunday anthems stitched to afrobeats pockets, quiet-storm prayers between the drops.</p>
       <p>Across <strong>25+ tapes</strong> and <strong>435,000+ streams</strong>, the work has grown into a full catalogue — <em>Purepraises</em>, <em>HoWzParty</em>, the <em>Superstars</em> series, <em>AfroGospel Juice</em>, <em>Fearless</em>, <em>Church Street</em>, <em>Testimony</em>, <em>XtremGospel</em>, the <em>Best of Frank Edwards</em> trilogy and more. Collaborators have included <strong>Frank Edwards</strong>, <strong>Mercy Chinwo</strong>, <strong>Tim Godfrey</strong>, <strong>Dunsin Oyekan</strong>, <strong>Tope Alabi</strong>, <strong>Sinach</strong>, <strong>Mike Abdul</strong>, <strong>Ada Ehi</strong>, <strong>Lecrae</strong>, <strong>Moses Bliss</strong>, <strong>Limoblaze</strong>, <strong>Cobhams Asuquo</strong> and scores more.</p>
       <p>The mission is simple and devotional: <em style="font-family:var(--ff-italic); color: var(--amber); font-style: italic; font-weight: 600;">make the spirit move and the feet follow.</em></p>
     </div>
@@ -1393,9 +1665,32 @@
       <div class="num-cell reveal"><div class="n-label">Featured Artists</div><div class="n-big">100<em>+</em></div><div class="n-foot">Names stitched across every mix — a rolling Afrogospel ensemble.</div></div>
       <div class="num-cell reveal"><div class="n-label">Active Since</div><div class="n-big">2014</div><div class="n-foot">From <em>Superstars Vol 1</em> (Feb '14) to the present day.</div></div>
       <div class="num-cell reveal"><div class="n-label">Label / Home</div><div class="n-big" style="font-size: clamp(1.5rem,3vw,2.4rem);">HoWz <em>Studios</em></div><div class="n-foot">Part of the HoWz mothership — design, tech, photography, sound.</div></div>
-      <div class="num-cell reveal"><div class="n-label">Base</div><div class="n-big" style="font-size: clamp(1.5rem,3vw,2.4rem);"><em>Ilorin</em> → Lagos</div><div class="n-foot">Rooted in Kwara State, working across Nigeria and the wider continent.</div></div>
+      <div class="num-cell reveal"><div class="n-label">Base / Reach</div><div class="n-big" style="font-size: clamp(1.5rem,3vw,2.4rem);"><em>US</em> · Worldwide</div><div class="n-foot">Based in the United States, available to travel anywhere — global bookings welcome.</div></div>
     </div>
   </div>
+</section>
+
+<!-- CINEMA CUT -->
+<section class="cinema-cut reveal">
+  <div class="cc-image"></div>
+  <div class="cc-tint"></div>
+  <div class="cc-scan"></div>
+  <div class="cc-frame"><span class="c-tl"></span><span class="c-tr"></span><span class="c-bl"></span><span class="c-br"></span></div>
+
+  <div class="cc-inner">
+    <div class="cc-top">
+      <span>◦ Reel N°001 · Side A</span>
+      <span class="cc-rec">● Rec. Live</span>
+    </div>
+    <div class="cc-title">The <em>Selector</em>.<br/>DJ <em>Wealth</em>.</div>
+    <div class="cc-sub">Headphones down, eyes closed, <strong>tape rolling</strong>. This is the posture.</div>
+    <div class="cc-credits">
+      <div class="cc-credits-row"><strong>Scene</strong><span>Studio · Low light · High intent</span></div>
+      <div class="cc-credits-row"><strong>Kit</strong><span>DDJ-400 · Decade of muscle memory</span></div>
+      <div class="cc-credits-row"><strong>Photo</strong><span>Dimimu · 2021</span></div>
+    </div>
+  </div>
+  <div class="cc-logo-corner"></div>
 </section>
 
 <!-- NOW SPINNING -->
@@ -1462,7 +1757,7 @@
 
     <a class="tape wide reveal" href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
       <div class="tape-cover">
-        <div class="tape-cover-inner cv4"></div>
+        <div class="tape-cover-logo"></div><div class="tape-cover-inner cv4"></div>
         <div class="tape-title-lg">AFROGOSPEL<br/>JUICE</div>
         <button class="tape-playbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7L7 5z"/></svg></button>
         <div class="tape-cover-meta"><span>2021 · DJ Mix</span><span>Chill · Party</span></div>
@@ -1474,7 +1769,7 @@
 
     <a class="tape reveal" href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
       <div class="tape-cover">
-        <div class="tape-cover-inner cv2"></div>
+        <div class="tape-cover-logo"></div><div class="tape-cover-inner cv2"></div>
         <div class="tape-title-lg">PUREPRAISES<br/>'18</div>
         <button class="tape-playbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7L7 5z"/></svg></button>
         <div class="tape-cover-meta"><span>2018 · Worship</span><span>Ministry</span></div>
@@ -1486,7 +1781,7 @@
 
     <a class="tape reveal" href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
       <div class="tape-cover">
-        <div class="tape-cover-inner cv1"></div>
+        <div class="tape-cover-logo"></div><div class="tape-cover-inner cv1"></div>
         <div class="tape-title-lg">HoWz<br/>PARTY</div>
         <button class="tape-playbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7L7 5z"/></svg></button>
         <div class="tape-cover-meta"><span>2018 · Party</span><span>Afro-Dancehall</span></div>
@@ -1498,7 +1793,7 @@
 
     <a class="tape reveal" href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
       <div class="tape-cover">
-        <div class="tape-cover-inner cv3"></div>
+        <div class="tape-cover-logo"></div><div class="tape-cover-inner cv3"></div>
         <div class="tape-title-lg">FEARLESS<br/>MIX</div>
         <button class="tape-playbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7L7 5z"/></svg></button>
         <div class="tape-cover-meta"><span>2017 · Slow Jam</span><span>Legends</span></div>
@@ -1510,7 +1805,7 @@
 
     <a class="tape reveal" href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
       <div class="tape-cover">
-        <div class="tape-cover-inner cv5"></div>
+        <div class="tape-cover-logo"></div><div class="tape-cover-inner cv5"></div>
         <div class="tape-title-lg">2022<br/>ALERT</div>
         <button class="tape-playbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7L7 5z"/></svg></button>
         <div class="tape-cover-meta"><span>2021 · Motivation</span><span>Afropop</span></div>
@@ -1522,7 +1817,7 @@
 
     <a class="tape wide reveal" href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
       <div class="tape-cover">
-        <div class="tape-cover-inner cv6"></div>
+        <div class="tape-cover-logo"></div><div class="tape-cover-inner cv6"></div>
         <div class="tape-title-lg">BEST OF<br/>FRANK EDWARDS</div>
         <button class="tape-playbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7L7 5z"/></svg></button>
         <div class="tape-cover-meta"><span>2015–2020 · Trilogy</span><span>Legends</span></div>
@@ -1717,12 +2012,30 @@
 
 <!-- TESTIMONY -->
 <section class="testimony">
+  <div class="testimony-bg"></div>
+  <div class="testimony-bg-veil"></div>
   <div class="testimony-inner reveal">
     <div class="section-label">Testimony N°001</div>
     <div class="testimony-quote">
       <span class="q-mark">“</span>Afrogospel is not a <em>genre</em>. It's a <strong>posture</strong> — you bring Sunday into the club, and the club into Sunday. Same Spirit. Different <em>BPM</em>.<span class="q-mark">”</span>
     </div>
     <div class="testimony-attrib">— <strong>DJ Wealth</strong>, on the decks</div>
+  </div>
+</section>
+
+<!-- THE MARK -->
+<section class="mark-section">
+  <div class="mark-wrap reveal">
+    <div class="mark-tag">◦ The Mark</div>
+    <div class="mark-image"></div>
+    <div class="mark-words">Headphones on. <em>Signal rising.</em><br/>The mind is the mixer.</div>
+    <div class="mark-sub">The WealthDJ mark is a profile in motion — head full of frequencies, ears tuned to the room. If the tape has the mark on it, it came through the booth.</div>
+    <div class="mark-attrs">
+      <span><strong>EST.</strong> MMXIV</span>
+      <span><strong>Origin</strong> Nigeria</span>
+      <span><strong>Base</strong> US</span>
+      <span><strong>Reach</strong> Worldwide</span>
+    </div>
   </div>
 </section>
 
@@ -1761,8 +2074,8 @@
         <div class="faq-a"><div class="faq-a-inner">All bookings run through <strong>howzstd@gmail.com</strong> (HoWz Studios). Send the event type, date, venue, expected audience size, and the energy you're going for — you'll hear back within 48 hours with availability and pricing.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" data-cursor-hover>Do you travel outside <em>Nigeria</em>?<span class="fq-plus"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Yes. Travel is handled case-by-case — international bookings should include proposed travel / accommodation arrangements in the initial brief. Lagos and Ilorin are the home base; anywhere else is on the table.</div></div>
+        <button class="faq-q" data-cursor-hover>Where are you based, and do you <em>travel</em>?<span class="fq-plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Based in <strong>the United States</strong> with roots in <strong>Nigeria</strong>. Available to travel <strong>anywhere</strong> — domestic US bookings, international ministry conferences, weddings, diaspora events and festivals are all on the table. Include proposed travel dates and location in the booking brief and we'll handle logistics from there.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" data-cursor-hover>Can you build a <em>custom mix</em> for me or my brand?<span class="fq-plus"></span></button>
@@ -1853,7 +2166,7 @@
       </a>
       <a class="social-card reveal" href="https://soundcloud.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>
         <div><div class="sc-platform">◦ SoundCloud</div><div class="sc-handle">@<em>wealthdj</em></div><div class="sc-desc">Long-form mixes. Afro-Jubilee, Unchained, XtremGospel.</div></div>
-        <div class="sc-foot"><span class="sc-count">Ilorin · NG</span><span class="sc-arrow">→</span></div>
+        <div class="sc-foot"><span class="sc-count">US · Worldwide</span><span class="sc-arrow">→</span></div>
       </a>
       <a class="social-card reveal" href="https://www.instagram.com/wealth_dj/" target="_blank" rel="noopener" data-cursor-hover>
         <div><div class="sc-platform">◦ Instagram</div><div class="sc-handle">@<em>wealth_dj</em></div><div class="sc-desc">Booth photography, set clips, behind-the-scenes.</div></div>
@@ -1900,7 +2213,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-mark">WEALTH<em>DJ</em>.</div>
+    <div class="footer-mark"><span class="footer-logo"></span>WEALTH<em>DJ</em>.</div>
     <div class="footer-links">
       <a href="https://audiomack.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>Audiomack</a>
       <a href="https://soundcloud.com/wealthdj" target="_blank" rel="noopener" data-cursor-hover>SoundCloud</a>
@@ -1913,7 +2226,7 @@
     </div>
   </div>
   <div class="footer-meta">
-    <span>© MMXXVI · WealthDJ · Afrogospel · DJ Wealth · Ilorin, Nigeria</span>
+    <span>© MMXXVI · WealthDJ · Afrogospel · DJ Wealth · Based in the US, Available Worldwide</span>
     <span>A <a href="mailto:howzstd@gmail.com" data-cursor-hover>HoWz Studios</a> Project · <a href="mailto:howzstd@gmail.com" data-cursor-hover>howzstd@gmail.com</a></span>
   </div>
 </footer>
